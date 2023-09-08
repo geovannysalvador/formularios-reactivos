@@ -102,13 +102,13 @@
 <pre>{{ myFom.errors | json }}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ myFom.value.name | json }}</pre>
+<pre>{{ myFom.controls['name'].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ myFom.value.email | json }}</pre>
+<pre>{{ myFom.controls['email'].errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ myFom.value.username | json }}</pre>
+<pre>{{ myFom.controls['username'].errors | json }}</pre>
 
 
 <h5>Password</h5>
