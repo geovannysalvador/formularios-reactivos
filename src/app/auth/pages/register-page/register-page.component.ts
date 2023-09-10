@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from 'src/app/shared/service/validators.service';
+import { EmailValidatorService } from 'src/app/shared/validators/email-validator.service';
 import * as allValidators from 'src/app/shared/validators/validators';
 
 @Component({
@@ -12,9 +13,10 @@ import * as allValidators from 'src/app/shared/validators/validators';
 export class RegisterPageComponent {
 
   public myFom:FormGroup = this.fb.group({
-    name: ['', [ Validators.required, Validators.pattern(allValidators.firstNameAndLastnamePattern) ]],
-    email: ['', [ Validators.required, Validators.pattern(allValidators.emailPattern) ]],
-    username: ['', [ Validators.required, allValidators.cantBeStrider ]],
+    name: ['', [ Validators.required, Validators.pattern(this.validatorService.firstNameAndLastnamePattern) ]],
+    // email: ['', [ Validators.required, Validators.pattern(this.validatorService.emailPattern) ], [ new EmailValidatorService()]],
+    email: ['', [ Validators.required, Validators.pattern(this.validatorService.emailPattern) ], [ this.emailValidator ]],
+    username: ['', [ Validators.required, this.validatorService.cantBeStrider ]],
     password: ['', [ Validators.required, Validators.minLength(6) ]],
     password2: ['', [ Validators.required, Validators.minLength(6) ]],
   })
@@ -22,10 +24,11 @@ export class RegisterPageComponent {
   constructor(
     private fb:FormBuilder,
     private validatorService:ValidatorsService,
+    private emailValidator:EmailValidatorService,
     ){}
 
-  isValidField(field:string):void{
-    //TODO validacion de un servicio
+  isValidField(field:string){
+    return this.validatorService.isValidField(this.myFom, field)
   }
 
   onSubmit(){
